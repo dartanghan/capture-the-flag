@@ -1,0 +1,43 @@
+{
+  "experimental": {
+    "subagent_depth": 2
+  },
+  "providers": {
+        "ollama": {
+        "apiUrl": "http://127.0.0",
+        "apiKey": "ollama"
+        }
+    },
+  "provider": "ollama",
+  "agents": {
+    "po": {
+      "prompt": "{file:.opencode/agents/po.md}",
+      "description": "Product Owner Agent for writing SPECS",
+      "permissions": [
+        { "action": "edit", "resource": "*", "effect": "deny" },
+        { "action": "edit", "resource": "SPECS/*", "effect": "allow" },
+        { "action": "bash", "resource": "*", "effect": "allow" }
+      ]
+    },
+    "dev": {
+      "prompt": "{file:.opencode/agents/dev.md}",
+      "mode": "subagent",
+      "description": "Generate the code provisioned by the Product owner agent",
+      "permission": [
+        { "action": "edit", "resource": "SPECS/*", "effect": "deny" },
+        { "action": "edit", "resource": "*", "effect": "allow" },
+        { "action": "bash", "resource": "*", "effect": "allow" }
+      ]
+    },
+    "tester": {
+      "prompt": "{file:.opencode/agents/tester.md}",
+      "mode": "subagent",
+      "description": "Validate the output of developer and asks fix from developer",
+      "permission": [
+        { "action": "edit", "resource": "SPECS/*", "effect": "deny" },
+        { "action": "edit", "resource": "*", "effect": "allow" },
+        { "action": "bash", "resource": "*", "effect": "allow" }
+      ]
+    }
+  }
+}
